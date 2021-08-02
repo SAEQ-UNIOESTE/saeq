@@ -57,10 +57,10 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   }
 
   console.log('Novo usuário cadastrado')
-  res.json({erro: true, mensagem: "Novo usuário cadastrado"})
+  res.json({erro: false, mensagem: "Novo usuário cadastrado"})
 }
 
-async function verifica_existencia(cpf:String) {
+async function verifica_existencia(cpf:string) {
   var retorno
   const prisma = new PrismaClient()
 
@@ -91,22 +91,22 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
   const combinacao  = novo_usuario.palavra_um + " " + novo_usuario.palavra_dois + " " + novo_usuario.palavra_tres
   const chave       = novo_usuario.cadastro.toString() + " | " + combinacao
 
-  const senha_cifrada      = new Cifrador(novo_usuario.senha,     chave, combinacao).cifrar()
-  const nivel_cifrado      = new Cifrador(novo_usuario.nivel,     chave, combinacao).cifrar()
-  const nome_cifrado       = new Cifrador(novo_usuario.nome,      chave, combinacao).cifrar()
-  const sobrenome_cifrado  = new Cifrador(novo_usuario.sobrenome, chave, combinacao).cifrar()
+  const senha_cifrada      = new Cifrador().cifrar(novo_usuario.senha,     chave, combinacao)
+  const nivel_cifrado      = new Cifrador().cifrar(novo_usuario.nivel,     chave, combinacao)
+  const nome_cifrado       = new Cifrador().cifrar(novo_usuario.nome,      chave, combinacao)
+  const sobrenome_cifrado  = new Cifrador().cifrar(novo_usuario.sobrenome, chave, combinacao)
 
-  const usuario_cifrado    = new Cifrador(novo_usuario.usuario,  combinacao, combinacao).cifrar()
-  const email_cifrado      = new Cifrador(novo_usuario.email,    combinacao, combinacao).cifrar()
-  const telefone_cifrado   = new Cifrador(novo_usuario.telefone, combinacao, combinacao).cifrar()
-  const cpf_cifrado        = new Cifrador(novo_usuario.cpf,      combinacao, combinacao).cifrar()
+  const usuario_cifrado    = new Cifrador().cifrar(novo_usuario.usuario,  combinacao, combinacao)
+  const email_cifrado      = new Cifrador().cifrar(novo_usuario.email,    combinacao, combinacao)
+  const telefone_cifrado   = new Cifrador().cifrar(novo_usuario.telefone, combinacao, combinacao)
+  const cpf_cifrado        = new Cifrador().cifrar(novo_usuario.cpf,      combinacao, combinacao)
 
   var nome_social_cifrado      = null
   var sobrenome_social_cifrado = null
   
   if (novo_usuario.utilizar_nome_social == true) {
-    nome_social_cifrado      = new Cifrador(novo_usuario.nome_social,      chave, combinacao).cifrar()
-    sobrenome_social_cifrado = new Cifrador(novo_usuario.sobrenome_social, chave, combinacao).cifrar()
+    nome_social_cifrado      = new Cifrador().cifrar(novo_usuario.nome_social,      chave, combinacao)
+    sobrenome_social_cifrado = new Cifrador().cifrar(novo_usuario.sobrenome_social, chave, combinacao)
   }
 
   try {
@@ -127,7 +127,6 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
         cpf: cpf_cifrado,
       },
     })
-    console.log(resultado)
   } catch(e) {
     return -1
   } finally {
@@ -137,7 +136,7 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
   return 0;
 }
 
-async function cadastra_triade(cpf:String, palavra_um:String, palavra_dois:String, palavra_tres:String) {
+async function cadastra_triade(cpf:string, palavra_um:string, palavra_dois:string, palavra_tres:string) {
   const prisma = new PrismaClient()
   
   var _cpf_hash = require("crypto-js")

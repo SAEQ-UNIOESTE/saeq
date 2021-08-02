@@ -12,13 +12,15 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     palavra_dois: req.body.usuario.palavra_dois,
     palavra_tres: req.body.usuario.palavra_tres,
   }
+  console.log(usuario)
   const combinacao = usuario.palavra_um + " " + usuario.palavra_dois + " " + usuario.palavra_tres
-  const id = await buscar_id_do_usuario(usuario.usuario, combinacao)
-  if(id === null || id == -1) {
-    res.json({erro: true, mensagem: "Usuário não encontrado ou erro na busca", retorno_id: id})
+  const _busca_usuario = await buscar_usuario(usuario.usuario, combinacao)
+  if(_busca_usuario == null || _busca_usuario == -1) {
+    res.json({erro: true, mensagem: "Usuário não encontrado ou erro na busca", retorno: _busca_usuario})
     return
   }
-
+  console.log(_busca_usuario)
+  // const cadastro_do_usuario:tipoUsuario = await descifra_usuario(busca_usuario, combinacao)
 }
 
 
@@ -73,20 +75,22 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 }
 */
 
-async function buscar_id_do_usuario(usuario:String, combinacao:String) {
+async function buscar_usuario(usuario:string, combinacao:string) {
   var retorno
   const prisma = new PrismaClient()
 
-  const usuario_cifrado = new Cifrador(usuario, combinacao, combinacao).cifrar()
+  const usuario_cifrado:string = new Cifrador().cifrar(usuario, combinacao, combinacao)
+  console.log(usuario_cifrado)
   
   try {
-    const resultado = await prisma.triade.findUnique({
+    const resultado = await prisma.usuarios.findUnique({
       where: {
         usuario: usuario_cifrado,
       },
     })
     retorno = resultado
   } catch(e) {
+    console.log(e)
     return -1
   } finally {
     await prisma.$disconnect()
