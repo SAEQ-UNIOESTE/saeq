@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import MenuSecretario from "./menu_funcionario";
+import MenuFuncionario from "./menu_funcionario";
 import MenuCoodenador from "./menu_coordenador";
 import MenuAluno from "./menu_aluno";
 
@@ -10,7 +10,7 @@ export default function Cabecalho(props) {
   var menu = null
   switch (props.nivel) {
     case "funcionario":
-      menu = MenuSecretario()
+      menu = MenuFuncionario()
       break;
     
     case "coordenador":

@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export default function MenuSecretario() {
+export default function MenuFuncionario() {
   return (
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
