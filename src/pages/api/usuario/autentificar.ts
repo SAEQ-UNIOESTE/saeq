@@ -14,6 +14,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   }
 
   const combinacao = usuario.palavra_um + " " + usuario.palavra_dois + " " + usuario.palavra_tres
+
   const busca_usuario = await buscar_usuario(usuario.usuario, combinacao)
   if(busca_usuario == null || busca_usuario == -1) {
     res.json({erro: true, mensagem: "Usuário não encontrado ou erro na busca", retorno: busca_usuario})
@@ -21,10 +22,12 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   }
 
   const cadastro_do_usuario = await descifra_usuario(busca_usuario, combinacao)
+  console.log(cadastro_do_usuario)
 }
 
 async function descifra_usuario(busca_de_usuario:any, combinacao:string) {
   const prisma = new PrismaClient()
+  console.log(busca_de_usuario)
 
   const chave              = busca_de_usuario.cadastro.toString() + " | " + combinacao
   const senha_cifrada      = new Cifrador().descifrar(busca_de_usuario.senha,     chave, combinacao)
@@ -32,11 +35,6 @@ async function descifra_usuario(busca_de_usuario:any, combinacao:string) {
   const nome_cifrado       = new Cifrador().descifrar(busca_de_usuario.nome,      chave, combinacao)
   const sobrenome_cifrado  = new Cifrador().descifrar(busca_de_usuario.sobrenome, chave, combinacao)
 
-  var _usuario_hash = require("crypto-js")
-  _usuario_hash = _usuario_hash.HmacSHA256(busca_de_usuario.usuario, combinacao)
-  const usuario_hash:string = _usuario_hash.toString()
-
-  const usuario_cifrado   = new Cifrador().descifrar(busca_de_usuario.usuario,  combinacao, combinacao)
   const email_cifrado     = new Cifrador().descifrar(busca_de_usuario.email,    combinacao, combinacao)
   const telefone_cifrado  = new Cifrador().descifrar(busca_de_usuario.telefone, combinacao, combinacao)
   const cpf_cifrado       = new Cifrador().descifrar(busca_de_usuario.cpf,      combinacao, combinacao)
@@ -53,8 +51,7 @@ async function descifra_usuario(busca_de_usuario:any, combinacao:string) {
     id: busca_de_usuario.id,
     logavel: busca_de_usuario.logavel,
     cadastro: busca_de_usuario.cadastrado,
-    usuario: usuario_cifrado,
-    usuario_hash: usuario_hash,
+    usuario: busca_de_usuario.usuario,
     senha: senha_cifrada,
     email: email_cifrado,
     telefone: telefone_cifrado,
@@ -66,22 +63,18 @@ async function descifra_usuario(busca_de_usuario:any, combinacao:string) {
     nivel: nivel_cifrado,
     cpf: cpf_cifrado,
   }
+
+  return usuario
 }
 
 async function buscar_usuario(usuario:string, combinacao:string) {
   var retorno
   const prisma = new PrismaClient()
-
-  console.log(usuario)
-  var _usuario_hash = require("crypto-js")
-  _usuario_hash = _usuario_hash.HmacSHA512(usuario, combinacao)
-  const usuario_hash:string = _usuario_hash.toString()
   
-  console.log(usuario_hash)
   try {
     const resultado = await prisma.usuarios.findUnique({
       where: {
-        usuario_hash: usuario_hash,
+        usuario: usuario,
       },
     })
     retorno = resultado
@@ -90,6 +83,5 @@ async function buscar_usuario(usuario:string, combinacao:string) {
   } finally {
     await prisma.$disconnect()
   }
-
   return retorno
 }

@@ -5,7 +5,6 @@ export type tipoUsuario = {
     nivel: string;
     cadastro: string;
     usuario: string;
-    usuario_hash: string;
     senha: string;
     email: string;
     telefone: string;

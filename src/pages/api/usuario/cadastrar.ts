@@ -96,11 +96,6 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
   const nome_cifrado       = new Cifrador().cifrar(novo_usuario.nome,      chave, combinacao)
   const sobrenome_cifrado  = new Cifrador().cifrar(novo_usuario.sobrenome, chave, combinacao)
 
-  var _usuario_hash = require("crypto-js")
-  _usuario_hash = _usuario_hash.HmacSHA256(novo_usuario.usuario, combinacao)
-  const usuario_hash:string = _usuario_hash.toString()
-
-  const usuario_cifrado    = new Cifrador().cifrar(novo_usuario.usuario,  combinacao, combinacao)
   const email_cifrado      = new Cifrador().cifrar(novo_usuario.email,    combinacao, combinacao)
   const telefone_cifrado   = new Cifrador().cifrar(novo_usuario.telefone, combinacao, combinacao)
   const cpf_cifrado        = new Cifrador().cifrar(novo_usuario.cpf,      combinacao, combinacao)
@@ -113,13 +108,15 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
     sobrenome_social_cifrado = new Cifrador().cifrar(novo_usuario.sobrenome_social, chave, combinacao)
   }
 
+  console.log('------')
+  console.log('BUSCA DE USUARIO:')
+  console.log(novo_usuario.usuario + " | " + combinacao)
   try {
     const resultado = await prisma.usuarios.create({
       data: {
         logavel: true,
         data_de_cadastro: novo_usuario.cadastro,
-        usuario: usuario_cifrado,
-        usuario_hash: usuario_hash,
+        usuario: novo_usuario.usuario,
         senha: senha_cifrada,
         email_principal: email_cifrado,
         telefone_principal: telefone_cifrado,

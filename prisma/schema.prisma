@@ -20,8 +20,7 @@ model usuarios {
   logavel              Boolean
   nivel                String   @db.VarChar(2048)
   data_de_cadastro     DateTime @db.Date
-  usuario              String   @db.VarChar(4096)
-  usuario_hash         String   @unique @db.VarChar(4096)
+  usuario              String   @unique @db.VarChar(4096)
   senha                String   @db.VarChar(4096)
   email_principal      String   @db.VarChar(4096)
   telefone_principal   String   @db.VarChar(2048)
