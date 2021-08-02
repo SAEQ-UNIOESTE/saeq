@@ -1,34 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SAEQ-WEB
 
-## Getting Started
+## Executando
 
-First, run the development server:
+Primeiro, instale o [Node.js](https://nodejs.org/) em sua máquina.
+
+Segundo, instale as dependências do projeto:
+
+```bash
+npm install next react react-dom crypto-js react-hook-form dotenv-webpack typescript @types/react prisma @prisma/client @prisma/studio
+```
+
+Terceiro, gere os arquivos necessários através do comando abaixo.
+
+```bash
+npx create-next-app saeq-web
+```
+
+Quarto, clone o repositório do projeto no [GitHub](https://github.com/SAEQ-UNIOESTE/saeq-web).
+
+Quinto, copie para dentro do diretório clonado a pasta <code>node_modules</code> gerada no terceiro passo.
+  
+Sexto, execute o comando abaixo para inicializar a aplicação (é necessário estar dentro do diretório clonado).
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sétimo, abra o link [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Configuração do banco de dados para desenvolvimento
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.tsx`.
+Primeiro instale o Docker:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+https://docs.docker.com/
+```
 
-## Learn More
+Após o daemon do docker estar rodando em sua máquina, baixe e configure um container do `postgresql`:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+sudo docker volume create postgres-volume
+sudo docker run -d --name=postgres13 -p 5432:5432 -v postgres-volume:/var/lib/postgresql/data -e POSTGRES_PASSWORD=password postgres
+sudo docker start $ID_DO_CONTAINER
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Isso irá criar um servidor postgresql com o usuário `postgres` e senha `password` rodando em `http://localhost:5432`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Em seguida adicione um arquivo `.env` na raiz do projeto com o conteúdo:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+DATABASE_URL="postgresql://postgresql:password@localhost:5432/mydb?schema=public"
+```
