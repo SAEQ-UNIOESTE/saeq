@@ -1,8 +1,6 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import { PrismaClient } from "@prisma/client";
-import Cifrador from "../../../services/cifrador";
 import { tipoLogarUsuario, tipoUsuario } from "../../../services/tipo_usuario";
-import "crypto-js";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   const usuario:tipoLogarUsuario = {
@@ -10,13 +8,12 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     senha: req.body.usuario.senha,
   }
   const busca_usuario = await buscar_usuario(usuario.usuario)
-  if(busca_usuario == null || busca_usuario == -1) {
+  if(busca_usuario === null || busca_usuario === -1) {
     res.json({erro: true, mensagem: "Usuário não encontrado ou erro na busca", retorno: busca_usuario})
     return
   }
 
-  const cadastro_do_usuario = await descifra_usuario(busca_usuario, combinacao)
-  console.log(cadastro_do_usuario)
+  console.log(busca_usuario)
 }
 
 async function descifra_usuario(busca_de_usuario:any, combinacao:string) {
@@ -41,7 +38,7 @@ async function descifra_usuario(busca_de_usuario:any, combinacao:string) {
   return usuario
 }
 
-async function buscar_usuario(usuario:string, combinacao:string) {
+async function buscar_usuario(usuario:string) {
   var retorno
   const prisma = new PrismaClient()
   
@@ -53,6 +50,7 @@ async function buscar_usuario(usuario:string, combinacao:string) {
     })
     retorno = resultado
   } catch(e) {
+    console.log(e)
     return -1
   } finally {
     await prisma.$disconnect()
