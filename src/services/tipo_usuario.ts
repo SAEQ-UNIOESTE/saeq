@@ -5,6 +5,7 @@ export type tipoUsuario = {
     nivel: string;
     cadastro: string;
     usuario: string;
+    usuario_hash: string;
     senha: string;
     email: string;
     telefone: string;
@@ -13,9 +14,6 @@ export type tipoUsuario = {
     utilizar_nome_social: boolean;
     nome_social: string;
     sobrenome_social: string;
-    palavra_um: string;
-    palavra_dois: string;
-    palavra_tres: string;
 };
 
 export type tipoCadastrarUsuario = {

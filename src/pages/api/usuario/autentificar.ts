@@ -23,24 +23,48 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const cadastro_do_usuario = await descifra_usuario(busca_usuario, combinacao)
 }
 
-async function descifra_usuario(busca_usuario, combinacao:string) {
-  const novo_usuario:tipoUsuario = {
-    logavel: busca_usuario.logavel,
-    cadastro: busca_usuario.cadastrado,
-    usuario: busca_usuario.usuario,
-    senha: busca_usuario.senha,
-    email: busca_usuario.email,
-    telefone: busca_usuario.telefone,
-    nome: busca_usuario.nome,
-    sobrenome: busca_usuario.novo_usuario.sobrenome,
-    utilizar_nome_social: busca_usuario.utilizar_nome_social,
-    nome_social: busca_usuario.nome_social,
-    sobrenome_social: busca_usuario.sobrenome_social,
-    nivel: busca_usuario.nivel,
-    cpf: busca_usuario.cpf,
-    palavra_um: busca_usuario.palavra_um,
-    palavra_dois: busca_usuario.palavra_dois,
-    palavra_tres: busca_usuario.palavra_tres,
+async function descifra_usuario(busca_de_usuario:any, combinacao:string) {
+  const prisma = new PrismaClient()
+
+  const chave              = busca_de_usuario.cadastro.toString() + " | " + combinacao
+  const senha_cifrada      = new Cifrador().descifrar(busca_de_usuario.senha,     chave, combinacao)
+  const nivel_cifrado      = new Cifrador().descifrar(busca_de_usuario.nivel,     chave, combinacao)
+  const nome_cifrado       = new Cifrador().descifrar(busca_de_usuario.nome,      chave, combinacao)
+  const sobrenome_cifrado  = new Cifrador().descifrar(busca_de_usuario.sobrenome, chave, combinacao)
+
+  var _usuario_hash = require("crypto-js")
+  _usuario_hash = _usuario_hash.HmacSHA256(busca_de_usuario.usuario, combinacao)
+  const usuario_hash:string = _usuario_hash.toString()
+
+  const usuario_cifrado   = new Cifrador().descifrar(busca_de_usuario.usuario,  combinacao, combinacao)
+  const email_cifrado     = new Cifrador().descifrar(busca_de_usuario.email,    combinacao, combinacao)
+  const telefone_cifrado  = new Cifrador().descifrar(busca_de_usuario.telefone, combinacao, combinacao)
+  const cpf_cifrado       = new Cifrador().descifrar(busca_de_usuario.cpf,      combinacao, combinacao)
+
+  var nome_social_cifrado      = null
+  var sobrenome_social_cifrado = null
+  
+  if (busca_de_usuario.utilizar_nome_social == true) {
+    nome_social_cifrado      = new Cifrador().descifrar(busca_de_usuario.nome_social,      chave, combinacao)
+    sobrenome_social_cifrado = new Cifrador().descifrar(busca_de_usuario.sobrenome_social, chave, combinacao)
+  }
+
+  const usuario:tipoUsuario = {
+    id: busca_de_usuario.id,
+    logavel: busca_de_usuario.logavel,
+    cadastro: busca_de_usuario.cadastrado,
+    usuario: usuario_cifrado,
+    usuario_hash: usuario_hash,
+    senha: senha_cifrada,
+    email: email_cifrado,
+    telefone: telefone_cifrado,
+    nome: nome_cifrado,
+    sobrenome: sobrenome_cifrado,
+    utilizar_nome_social: busca_de_usuario.utilizar_nome_social,
+    nome_social: nome_social_cifrado,
+    sobrenome_social: sobrenome_social_cifrado,
+    nivel: nivel_cifrado,
+    cpf: cpf_cifrado,
   }
 }
 
@@ -55,7 +79,7 @@ async function buscar_usuario(usuario:string, combinacao:string) {
   try {
     const resultado = await prisma.usuarios.findUnique({
       where: {
-        usuario: usuario_hash,
+        usuario_hash: usuario_hash,
       },
     })
     

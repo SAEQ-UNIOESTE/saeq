@@ -16,14 +16,15 @@ model triade {
 
 model usuarios {
   id                   Int      @id @default(autoincrement())
-  cpf                  String   @db.VarChar(1024)
+  cpf                  String   @db.VarChar(2048)
   logavel              Boolean
-  nivel                String   @db.VarChar(1024)
+  nivel                String   @db.VarChar(2048)
   data_de_cadastro     DateTime @db.Date
-  usuario              String   @unique @db.VarChar(4096)
+  usuario              String   @db.VarChar(4096)
+  usuario_hash         String   @unique @db.VarChar(4096)
   senha                String   @db.VarChar(4096)
   email_principal      String   @db.VarChar(4096)
-  telefone_principal   String   @db.VarChar(1024)
+  telefone_principal   String   @db.VarChar(2048)
   nome                 String   @db.VarChar(2048)
   sobrenome            String   @db.VarChar(2048)
   utilizar_nome_social Boolean
