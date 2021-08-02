@@ -6,6 +6,7 @@ import MenuCoodenador from "./menu_coordenador";
 import MenuAluno from "./menu_aluno";
 
 export default function Cabecalho(props) {
+  console.log(sessao.id)
   const diretorio_bootstrap_js = props.subir + "static/scripts/bootstrap.bundle.min.js"
   var menu = null
   switch (props.nivel) {

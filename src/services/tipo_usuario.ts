@@ -15,6 +15,21 @@ export type tipoUsuario = {
     sobrenome_social: string;
 };
 
+export type tipoSessaoUsuaio = {
+    id: number;
+    cpf: string;
+    nivel: string;
+    cadastro: string;
+    usuario: string;
+    email: string;
+    telefone: string;
+    nome: string;
+    sobrenome: string;
+    utilizar_nome_social: boolean;
+    nome_social: string;
+    sobrenome_social: string;
+}
+
 export type tipoCadastrarUsuario = {
     cpf: string;
     logavel: boolean;

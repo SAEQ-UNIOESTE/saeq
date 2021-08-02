@@ -28,24 +28,12 @@ function FormularioDeCadastro() {
           utilizar_nome_social: { value: string },
           nome_social: { value: string },
           sobrenome_social: { value: string },
-          palavra_um: { value: string },
-          palavra_dois: { value: string },
-          palavra_tres:{ value: string },
         };
-    
-        const combinacao = "rosas são vermelhas"
-        const cpf_cifrado = "fffff"
-        const cpf_hash = "dddddd"
-    
+
         const res = await fetch(
           'http://localhost:3000/api/usuario/cadastrar',
           {
             body: JSON.stringify({
-              funcionario: {
-                a: combinacao,
-                b: cpf_cifrado,
-                c: cpf_hash,
-              },
               novo_usuario: {
                 cpf: target.cpf.value,
                 nivel: "aluno",
@@ -57,9 +45,6 @@ function FormularioDeCadastro() {
                 utilizar_nome_social: target.utilizar_nome_social.value,
                 nome_social: target.nome_social.value,
                 sobrenome_social: target.sobrenome_social.value,
-                palavra_um: target.palavra_um.value,
-                palavra_dois: target.palavra_dois.value,
-                palavra_tres: target.palavra_tres.value,
               },
             }),
             headers: {
@@ -117,15 +102,6 @@ function FormularioDeCadastro() {
           <div className="mb-5">
             <label htmlFor="usuario" className="form-label">Login no sistema</label>
             <input type="text" id="usuario" name="usuario" className="form-control" placeholder="Lucas.Santos399"></input>
-          </div>
-
-          <div className="mb-5">
-            <label className="form-label">Tríade segura (importante)</label>
-            <div className="input-group">
-              <input type="text" id="palavra_um" name="palavra_um" className="form-control" placeholder="Árvore"></input>
-              <input type="text" id="palavra_dois" name="palavra_dois" className="form-control" placeholder="roxa" aria-label="Server"></input>
-              <input type="text" id="palavra_tres" name="palavra_tres" className="form-control" placeholder="caída" aria-label="Server"></input>
-            </div>
           </div>
           <button type="submit" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
         </fieldset>
