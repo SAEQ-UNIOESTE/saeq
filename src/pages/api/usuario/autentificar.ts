@@ -79,15 +79,19 @@ async function buscar_usuario(usuario:string, combinacao:string) {
   var retorno
   const prisma = new PrismaClient()
 
-  const usuario_cifrado:string = new Cifrador().cifrar(usuario, combinacao, combinacao)
-  console.log(usuario_cifrado)
+  var _usuariio_hash = require("crypto-js");
+  _usuariio_hash = _usuariio_hash.HmacSHA256(usuario, combinacao)
+  const usuario_hash:string = _usuariio_hash.toString()
   
   try {
     const resultado = await prisma.usuarios.findUnique({
       where: {
-        usuario: usuario_cifrado,
+        usuario: usuario_hash,
       },
     })
+    
+    console.log(usuario + " = " + usuario_hash)
+    
     retorno = resultado
   } catch(e) {
     console.log(e)

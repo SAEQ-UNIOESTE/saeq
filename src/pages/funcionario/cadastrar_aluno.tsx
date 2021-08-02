@@ -49,7 +49,7 @@ function FormularioDeCadastro() {
               novo_usuario: {
                 cpf: target.cpf.value,
                 nivel: "aluno",
-                usuario: target.cpf.value,
+                usuario: target.usuario.value,
                 email: target.email.value,
                 telefone: target.telefone.value,
                 nome: target.nome.value,
