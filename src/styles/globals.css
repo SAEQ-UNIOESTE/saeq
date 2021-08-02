@@ -1,16 +1,28 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+.login-card {
+    max-width: 390px;
+    padding: 15px;
+    margin: auto;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.cadastrar-card {
+    max-width: 560px;
+    padding: 15px;
+    margin: auto;
 }
 
-* {
-  box-sizing: border-box;
+.recuperar_login_senha_1 {
+    width: 100%;
+    margin: 0;
+}
+
+.recuperar_login_senha_2 {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.recuperar_login_senha_3 {
+    margin: 0 20px;
+    max-width: 400px;
+    display: inline-block;
 }
