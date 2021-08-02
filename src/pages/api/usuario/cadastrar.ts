@@ -35,8 +35,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     palavra_tres: req.body.novo_usuario.palavra_tres,
   }
 
-  console.log(novo_usuario)
-
   const verificacao = await verifica_existencia(novo_usuario.cpf)
   if (verificacao != null) {
     res.status(500)
@@ -98,9 +96,9 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
   const nome_cifrado       = new Cifrador().cifrar(novo_usuario.nome,      chave, combinacao)
   const sobrenome_cifrado  = new Cifrador().cifrar(novo_usuario.sobrenome, chave, combinacao)
 
-  var _usuariio_hash = require("crypto-js");
-  _usuariio_hash = _usuariio_hash.HmacSHA256(novo_usuario.usuario, combinacao)
-  const usuario_hash:string = _usuariio_hash.toString()
+  var _usuario_hash = require("crypto-js")
+  _usuario_hash = _usuario_hash.HmacSHA512(novo_usuario.usuario, combinacao)
+  const usuario_hash:string = _usuario_hash.toString()
 
   const email_cifrado      = new Cifrador().cifrar(novo_usuario.email,    combinacao, combinacao)
   const telefone_cifrado   = new Cifrador().cifrar(novo_usuario.telefone, combinacao, combinacao)
