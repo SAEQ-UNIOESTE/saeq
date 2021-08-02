@@ -1,9 +1,9 @@
 import Cabecalho from '../../components/cabecalho'
 
-export default function CadastrarFuncionario() {
+export default function CadastrarCoordenador() {
   return (
     <>
-      <Cabecalho pagina="Cadastrar Funcionário" subir="../" nivel="funcionario" />
+      <Cabecalho pagina="Cadastrar Coordenador" subir="../" nivel="funcionario" />
       <div className="p-5 text-left">
         <div className="card cadastrar-card">
           <div className="card-body">
@@ -48,7 +48,7 @@ function FormularioDeCadastro() {
               },
               novo_usuario: {
                 cpf: target.cpf.value,
-                nivel: "funcionario",
+                nivel: "coordenador",
                 usuario: target.cpf.value,
                 email: target.email.value,
                 telefone: target.telefone.value,
@@ -76,7 +76,7 @@ function FormularioDeCadastro() {
     <>
       <form onSubmit={formulario}>
         <fieldset>
-          <legend>Cadastrar um novo funcionário no sistema SAEQ</legend>
+          <legend>Cadastrar um novo coordenador no sistema SAEQ</legend>
           <div className="mb-3 pt-4">
             <label htmlFor="nome" className="form-label">Nome</label>
             <input type="text" id="nome" name="nome" className="form-control" placeholder="Ana Maria"></input>

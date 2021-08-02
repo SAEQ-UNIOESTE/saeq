@@ -7,7 +7,7 @@ import "crypto-js";
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   var utilizar_nome_social:boolean
   const senha = geraStringAleatoria(8)
-  const cadastro:Date = new Date // tem que converter para YYYY-MM-DD HH:MM:SS | depois, converter para string
+  const cadastro:Date = new Date
 
   if (req.body.novo_usuario.utilizar_nome_social == 'on') {
     utilizar_nome_social = true
@@ -57,6 +57,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     res.json({erro: true, mensagem: "Não foi possível inserir a tríade na base de dados"})
     return
   }
+
+  console.log('Novo usuário cadastrado')
+  res.json({erro: true, mensagem: "Novo usuário cadastrado"})
 }
 
 async function verifica_existencia(cpf:String) {
@@ -141,29 +144,29 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
 async function cadastra_triade(cpf:String, palavra_um:String, palavra_dois:String, palavra_tres:String) {
   const prisma = new PrismaClient()
   
-  var cpf_hash = require("crypto-js")
-  cpf_hash = cpf_hash.HmacSHA256(cpf, "aqule sol amarelo")
-  cpf_hash = cpf_hash.toString()
+  var _cpf_hash = require("crypto-js")
+  _cpf_hash = _cpf_hash.HmacSHA256(cpf, "aqule sol amarelo")
+  const cpf_hash:string = _cpf_hash.toString()
 
-  var palavra_um_cifrada = require("crypto-js");
-  palavra_um_cifrada = palavra_um_cifrada.HmacSHA512(palavra_um, cpf)
-  palavra_um_cifrada = palavra_um_cifrada.toString()
+  var _palavra_um_cifrada = require("crypto-js");
+  _palavra_um_cifrada = _palavra_um_cifrada.HmacSHA512(palavra_um, cpf)
+  const palavra_um_cifrada:string = _palavra_um_cifrada.toString()
 
-  var palavra_dois_cifrada = require("crypto-js");
-  palavra_dois_cifrada = palavra_dois_cifrada.HmacSHA512(palavra_dois, cpf)
-  palavra_dois_cifrada = palavra_dois_cifrada.toString()
+  var _palavra_dois_cifrada = require("crypto-js");
+  _palavra_dois_cifrada = _palavra_dois_cifrada.HmacSHA512(palavra_dois, cpf)
+  const palavra_dois_cifrada:string = _palavra_dois_cifrada.toString()
 
-  var palavra_tres_cifrada = require("crypto-js");
-  palavra_tres_cifrada = palavra_tres_cifrada.HmacSHA512(palavra_tres, cpf)
-  palavra_tres_cifrada = palavra_tres_cifrada.toString()
+  var _palavra_tres_cifrada = require("crypto-js");
+  _palavra_tres_cifrada = _palavra_tres_cifrada.HmacSHA512(palavra_tres, cpf)
+  const palavra_tres_cifrada:string = _palavra_tres_cifrada.toString()
 
   try {
     const resultado = await prisma.triade.create({
       data: {
         id: cpf_hash,
-        palavra_um_cifrada: palavra_um_cifrada,
-        palavra_dois_cifrada: palavra_dois_cifrada,
-        palavra_tres_cifrada: palavra_tres_cifrada,
+        palavra_um: palavra_um_cifrada,
+        palavra_dois: palavra_dois_cifrada,
+        palavra_tres: palavra_tres_cifrada,
       },
     })
   } catch(e) {

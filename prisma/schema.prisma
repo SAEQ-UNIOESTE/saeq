@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model triade {
+  id           String @id @db.VarChar(2048)
+  palavra_um   String @db.VarChar(2048)
+  palavra_dois String @db.VarChar(2048)
+  palavra_tres String @db.VarChar(2048)
+}
+
+model usuarios {
+  id                   Int      @id @default(autoincrement())
+  cpf                  String   @db.VarChar(1024)
+  logavel              Boolean
+  nivel                String   @db.VarChar(1024)
+  data_de_cadastro     DateTime @db.Date
+  usuario              String   @db.VarChar(4096)
+  senha                String   @db.VarChar(4096)
+  email_principal      String   @db.VarChar(4096)
+  telefone_principal   String   @db.VarChar(1024)
+  nome                 String   @db.VarChar(2048)
+  sobrenome            String   @db.VarChar(2048)
+  utilizar_nome_social Boolean
+  nome_social          String?  @db.VarChar(2048)
+  sobrenome_social     String?  @db.VarChar(2048)
+}
