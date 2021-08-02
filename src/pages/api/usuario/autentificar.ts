@@ -72,17 +72,18 @@ async function buscar_usuario(usuario:string, combinacao:string) {
   var retorno
   const prisma = new PrismaClient()
 
+  console.log(usuario)
   var _usuario_hash = require("crypto-js")
   _usuario_hash = _usuario_hash.HmacSHA512(usuario, combinacao)
   const usuario_hash:string = _usuario_hash.toString()
   
+  console.log(usuario_hash)
   try {
     const resultado = await prisma.usuarios.findUnique({
       where: {
         usuario_hash: usuario_hash,
       },
     })
-    
     retorno = resultado
   } catch(e) {
     return -1

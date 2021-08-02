@@ -65,7 +65,7 @@ async function verifica_existencia(cpf:string) {
   const prisma = new PrismaClient()
 
   var cpf_hash = require("crypto-js")
-  cpf_hash = cpf_hash.HmacSHA256(cpf, "aqule sol amarelo")
+  cpf_hash = cpf_hash.HmacSHA512(cpf, "aqule sol amarelo")
   cpf_hash = cpf_hash.toString()
 
   try {
