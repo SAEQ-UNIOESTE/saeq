@@ -36,3 +36,11 @@ export type tipoCadastrarUsuario = {
     palavra_dois: String;
     palavra_tres: String;
 };
+
+export type tipoLogarUsuario = {
+    usuario: String;
+    senha: String;
+    palavra_um: String;
+    palavra_dois: String;
+    palavra_tres: String;
+};

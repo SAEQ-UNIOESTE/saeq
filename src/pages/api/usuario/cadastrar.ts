@@ -1,12 +1,13 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import { PrismaClient } from "@prisma/client";
 import Cifrador from "../../../services/cifrador";
-import { tipoCadastrarUsuario, tipoUsuario } from "../../../services/tipo_usuario";
+import { tipoCadastrarUsuario } from "../../../services/tipo_usuario";
 import "crypto-js";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   var utilizar_nome_social:boolean
   const senha = geraStringAleatoria(8)
+  console.log('A nova senha é "' + senha + '"')
   const cadastro:Date = new Date
 
   if (req.body.novo_usuario.utilizar_nome_social == 'on') {
@@ -34,10 +35,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     palavra_tres: req.body.novo_usuario.palavra_tres,
   }
 
-  console.log(novo_usuario)
-
   const verificacao = await verifica_existencia(novo_usuario.cpf)
-  console.log(verificacao)
   if (verificacao != null) {
     res.status(500)
     res.json({erro: true, mensagem: "Esse CPF já existe na base de dados"})
@@ -79,7 +77,6 @@ async function verifica_existencia(cpf:String) {
     })
     retorno = resultado
   } catch(e) {
-    console.log(e)
     return -1
   } finally {
     await prisma.$disconnect()
@@ -91,7 +88,7 @@ async function verifica_existencia(cpf:String) {
 async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
   const prisma = new PrismaClient()
 
-  const combinacao  = novo_usuario.palavra_um + " " + novo_usuario.palavra_dois + "" + novo_usuario.palavra_tres
+  const combinacao  = novo_usuario.palavra_um + " " + novo_usuario.palavra_dois + " " + novo_usuario.palavra_tres
   const chave       = novo_usuario.cadastro.toString() + " | " + combinacao
 
   const senha_cifrada      = new Cifrador(novo_usuario.senha,     chave, combinacao).cifrar()
@@ -132,7 +129,6 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
     })
     console.log(resultado)
   } catch(e) {
-    console.log(e)
     return -1
   } finally {
     await prisma.$disconnect()
@@ -170,7 +166,6 @@ async function cadastra_triade(cpf:String, palavra_um:String, palavra_dois:Strin
       },
     })
   } catch(e) {
-    console.log(e)
     return -2
   } finally {
     await prisma.$disconnect()
