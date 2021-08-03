@@ -32,8 +32,8 @@ function FormularioDeCadastro() {
         };
 
         var nome_social:boolean = false
-        var nome_social_nome:any = false
-        var nome_social_sobrenome:any = false
+        var nome_social_nome:any = null
+        var nome_social_sobrenome:any = null
         if (target.utilizar_nome_social.value === 'on') {
           nome_social = true
           nome_social_nome = target.nome_social.value
@@ -53,7 +53,7 @@ function FormularioDeCadastro() {
                 curso: target.curso.value,
                 nome: target.nome.value,
                 sobrenome: target.sobrenome.value,
-                utilizar_nome_social: target.utilizar_nome_social.value,
+                utilizar_nome_social: nome_social,
                 nome_social: nome_social_nome,
                 sobrenome_social: nome_social_sobrenome,
               },
@@ -83,10 +83,11 @@ function FormularioDeCadastro() {
           </div>
 
           <div className="mb-3">
-            <div className="form-check">
-              <input className="form-check-input" type="checkbox" id="utilizar_nome_social" name="utilizar_nome_social"></input>
-              <label className="form-check-label" htmlFor="utilizar_nome_social">Utilizar nome social?</label>
-            </div>
+            <label className="form-label" htmlFor="utilizar_nome_social">Utilizar nome social?</label>
+            <select className="form-select" id="utilizar_nome_social" name="utilizar_nome_social" aria-label=".form-select-lg example">
+              <option value="off" selected>Não</option>
+              <option value="on">Sim</option>
+            </select>
           </div>
           <div className="mb-3">
             <label htmlFor="nome_social" className="form-label">Nome Social</label>

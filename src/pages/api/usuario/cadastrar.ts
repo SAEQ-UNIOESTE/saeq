@@ -3,16 +3,9 @@ import { PrismaClient } from "@prisma/client";
 import { tipoCadastrarUsuario } from "../../../services/tipo_usuario";
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  var utilizar_nome_social:boolean
   const senha = geraStringAleatoria(8)
   console.log('A nova senha é "' + senha + '"')
   const cadastro:Date = new Date
-
-  if (req.body.novo_usuario.utilizar_nome_social == 'on') {
-    utilizar_nome_social = true
-  } else {
-    utilizar_nome_social = false
-  }
 
   const novo_usuario:tipoCadastrarUsuario = {
     logavel: true,
@@ -24,7 +17,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     curso: req.body.novo_usuario.curso,
     nome: req.body.novo_usuario.nome,
     sobrenome: req.body.novo_usuario.sobrenome,
-    utilizar_nome_social: utilizar_nome_social,
+    utilizar_nome_social: req.body.novo_usuario.utilizar_nome_social,
     nome_social: req.body.novo_usuario.nome_social,
     sobrenome_social: req.body.novo_usuario.sobrenome_social,
     nivel: req.body.novo_usuario.nivel,
@@ -63,6 +56,7 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
       },
     })
   } catch(e) {
+    console.log(e)
     return -1
   } finally {
     await prisma.$disconnect()
