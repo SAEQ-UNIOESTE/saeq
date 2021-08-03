@@ -31,6 +31,15 @@ function FormularioDeCadastro() {
           sobrenome_social: { value: string },
         };
 
+        var nome_social:boolean = false
+        var nome_social_nome:any = false
+        var nome_social_sobrenome:any = false
+        if (target.utilizar_nome_social.value === 'on') {
+          nome_social = true
+          nome_social_nome = target.nome_social.value
+          nome_social_sobrenome = target.sobrenome_social.value
+        }
+
         const res = await fetch(
           'http://localhost:3000/api/usuario/cadastrar',
           {
@@ -45,8 +54,8 @@ function FormularioDeCadastro() {
                 nome: target.nome.value,
                 sobrenome: target.sobrenome.value,
                 utilizar_nome_social: target.utilizar_nome_social.value,
-                nome_social: target.nome_social.value,
-                sobrenome_social: target.sobrenome_social.value,
+                nome_social: nome_social_nome,
+                sobrenome_social: nome_social_sobrenome,
               },
             }),
             headers: {
