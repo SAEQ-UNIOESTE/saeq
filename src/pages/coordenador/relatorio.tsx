@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const Coordenador = ({ user }) => {
   var nome_exibicao:String
-  const caminho = "static/relatorios/" + user.dados.curso
+  const caminho = "../static/relatorios/" + user.dados.curso + ".pdf"
   if (user.dados.utilizar_nome_social===true) {
     nome_exibicao = user.dados.nome_social
   } else {
@@ -17,8 +17,8 @@ const Coordenador = ({ user }) => {
         <>
           <Cabecalho pagina="Início" nivel={user.dados.nivel} />
           <div className="p-5 text-center">
-            <h1 className="h4">Clique no botão abaixo para acessar o relatório</h1>
-            <a className="btn btn-outline-light" href={caminho}>Acessar relatório</a>
+            <p>Clique no botão abaixo para acessar o relatório</p>
+            <a className="btn btn-primary" href={caminho} role="button">Acessar relatório</a>
           </div>
         </>
       )}
