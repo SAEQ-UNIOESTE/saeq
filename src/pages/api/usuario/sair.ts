@@ -1,6 +1,6 @@
-import withIronSession from "../../../../lib/session";
+import withSession from "../../../../lib/session";
 
-function handler(req, res, session) {
+export default withSession(async (req, res) => {
   req.session.destroy();
-  res.send("Logged out");
-}
+  res.json({ isLoggedIn: false });
+});
