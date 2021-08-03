@@ -28,6 +28,6 @@ model cursos {
   id               Int      @id @default(autoincrement())
   codigo           String   @db.VarChar(64)
   nome             String   @db.VarChar(256)
-  coordenador      String   @db.VarChar(512)
+  coordenador      Int
   data_de_inclusao DateTime @db.Date
 }

@@ -7,6 +7,7 @@ export default withSession(async (req, res) => {
     usuario: await req.body.usuario.usuario,
     senha: await req.body.usuario.senha,
   }
+  console.log(usuario)
   const prisma = new PrismaClient()
   try {
     const dados = await prisma.usuarios.findUnique({

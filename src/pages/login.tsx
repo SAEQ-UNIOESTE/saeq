@@ -1,6 +1,8 @@
-
+import React, { useState } from "react";
 import Link from "next/link";
 import Cabecalho from "../components/cabecalho";
+import useUser from "../../lib/useUser";
+import fetchJson from "../../lib/fetchJson";
 
 export default function Login() {
   return (
@@ -18,34 +20,39 @@ export default function Login() {
 }
 
 function FormularioDeLogin() {
-  const formulario = async (event:React.SyntheticEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const { mutateUser } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
+
+  const [errorMsg, setErrorMsg] = useState("");
+
+  async function handleSubmit(event:any) {
+    event.preventDefault();
     const target = event.target as typeof event.target & {
       usuario: { value: string }
       senha: { value: string }
     };
 
-    const res = await fetch(
-      'http://localhost:3000/api/usuario/autentificar',
-      {
-        body: JSON.stringify({
-          usuario: {
-            usuario: target.usuario.value,
-            senha: target.senha.value,
-          }
+    try {
+      mutateUser(
+        await fetchJson("/api/usuario/autentificar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usuario: {
+              usuario: target.usuario.value,
+              senha: target.senha.value,
+            },
+          }),
         }),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-      }
-    )
-    const result = await res.json()
-    console.log(result)
+      );
+    } catch (error:any) {
+      console.error("An unexpected error happened:", error);
+    }
   }
-  
   return(
-    <form onSubmit={formulario}>
+    <form onSubmit={handleSubmit}>
       <fieldset>
         <legend>Entrar no sistema SAEQ</legend>
         <div className="mb-3 pt-4">
