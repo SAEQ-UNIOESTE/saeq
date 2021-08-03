@@ -1,10 +1,9 @@
-import Link from "next/link";
 import Cabecalho from "../components/cabecalho";
 import useUser from "../../lib/useUser";
 import useEvents from "../../lib/useEvents";
 import Router from 'next/router';
 
-export default function Login() {
+export default function Inicio() {
   const { user } = useUser({ redirectTo: "/login" });
   const { events, loadingEvents } = useEvents(user);
 
