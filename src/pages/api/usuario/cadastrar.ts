@@ -21,6 +21,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     senha: senha,
     email: req.body.novo_usuario.email,
     telefone: req.body.novo_usuario.telefone,
+    curso: req.body.novo_usuario.curso,
     nome: req.body.novo_usuario.nome,
     sobrenome: req.body.novo_usuario.sobrenome,
     utilizar_nome_social: utilizar_nome_social,
@@ -29,14 +30,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     nivel: req.body.novo_usuario.nivel,
     cpf: req.body.novo_usuario.cpf,
   }
-
-  const verificacao = await verifica_existencia(novo_usuario.cpf)
-  if (verificacao != null) {
-    res.status(500)
-    res.json({erro: true, mensagem: "Esse CPF já existe na base de dados"})
-    return
-  }
-
   const cadastro_do_usuario = await cadastra_usuario(novo_usuario)
   if (cadastro_do_usuario != 0) {
     res.status(500)
@@ -45,31 +38,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   }
   console.log('Novo usuário cadastrado')
   res.json({erro: false, mensagem: "Novo usuário cadastrado"})
-}
-
-async function verifica_existencia(cpf:string) {
-  var retorno
-  const prisma = new PrismaClient()
-
-  var cpf_hash = require("crypto-js")
-  cpf_hash = cpf_hash.HmacSHA512(cpf, "aqule sol amarelo")
-  cpf_hash = cpf_hash.toString()
-
-  try {
-    const formulario = cpf_hash
-    const resultado = await prisma.triade.findUnique({
-      where: {
-        id: cpf_hash,
-      },
-    })
-    retorno = resultado
-  } catch(e) {
-    return -1
-  } finally {
-    await prisma.$disconnect()
-  }
-
-  return retorno
 }
 
 async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
@@ -83,6 +51,7 @@ async function cadastra_usuario(novo_usuario:tipoCadastrarUsuario) {
         senha: novo_usuario.senha,
         email_principal: novo_usuario.email,
         telefone_principal: novo_usuario.telefone,
+        curso: novo_usuario.curso,
         nome: novo_usuario.nome,
         sobrenome: novo_usuario.sobrenome,
         utilizar_nome_social: novo_usuario.utilizar_nome_social,

@@ -56,6 +56,7 @@ Coordenador.propTypes = {
       senha: PropTypes.string,
       email: PropTypes.string,
       telefone: PropTypes.string,
+      curso: PropTypes.string,
       nome: PropTypes.string,
       sobrenome: PropTypes.string,
       utilizar_nome_social: PropTypes.bool,

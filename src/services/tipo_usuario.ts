@@ -8,6 +8,7 @@ export type tipoUsuario = {
     senha: string;
     email: string;
     telefone: string;
+    curso: string;
     nome: string;
     sobrenome: string;
     utilizar_nome_social: boolean;
@@ -39,6 +40,7 @@ export type tipoCadastrarUsuario = {
     senha: string;
     email: string;
     telefone: string;
+    curso: string;
     nome: string;
     sobrenome: string;
     utilizar_nome_social: boolean;

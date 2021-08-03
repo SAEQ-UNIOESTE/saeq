@@ -57,6 +57,7 @@ Sair.propTypes = {
       senha: PropTypes.string,
       email: PropTypes.string,
       telefone: PropTypes.string,
+      curso: PropTypes.string,
       nome: PropTypes.string,
       sobrenome: PropTypes.string,
       utilizar_nome_social: PropTypes.bool,
@@ -65,39 +66,3 @@ Sair.propTypes = {
     })
   })
 }
-
-/*
-import React, { useState } from "react";
-import useUser from "../../lib/useUser";
-import fetchJson from "../../lib/fetchJson";
-import user from "./api/usuario/user";
-
-export default function Sair() {
-  const { mutateUser } = useUser({
-    redirectTo: "/sair",
-    redirectIfFound: false,
-  })
-
-  async function sair() {
-    try {
-      mutateUser(
-        await fetchJson("/api/usuario/sair", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" }
-        })
-
-      )
-    } catch (error:any) {
-      console.error("An unexpected error happened:", error);
-    }
-  }
-
-  sair()
-
-  return (
-    <>
-      <h1>Agora vocês está livre para sair</h1>
-    </>
-  )
-}
-*/
