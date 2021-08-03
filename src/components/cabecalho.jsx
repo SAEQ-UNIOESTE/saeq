@@ -4,10 +4,15 @@ import Link from "next/link";
 import MenuFuncionario from "./menu_funcionario";
 import MenuCoodenador from "./menu_coordenador";
 import MenuAluno from "./menu_aluno";
+import useUser from "../../lib/useUser";
 
 export default function Cabecalho(props) {
-  
-  const diretorio_bootstrap_js = props.subir + "static/scripts/bootstrap.bundle.min.js"
+  var diretorio_bootstrap_js
+  if (props.subir) {
+    diretorio_bootstrap_js = props.subir + "static/scripts/bootstrap.bundle.min.js"
+  } else {
+    diretorio_bootstrap_js = "static/scripts/bootstrap.bundle.min.js"
+  }
   var menu = null
   switch (props.nivel) {
     case "funcionario":

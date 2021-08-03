@@ -7,13 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model triade {
-  id           String @id @db.VarChar(2048)
-  palavra_um   String @db.VarChar(2048)
-  palavra_dois String @db.VarChar(2048)
-  palavra_tres String @db.VarChar(2048)
-}
-
 model usuarios {
   id                   Int      @id @default(autoincrement())
   cpf                  String   @unique @db.VarChar(2048)

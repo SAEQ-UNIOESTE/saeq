@@ -1,15 +1,9 @@
 import Cabecalho from "../components/cabecalho";
 import useUser from "../../lib/useUser";
-import useEvents from "../../lib/useEvents";
-import Router from 'next/router';
+import withSession from "../../lib/session";
 
 export default function Inicio() {
   const { user } = useUser({ redirectTo: "/login" });
-  const { events, loadingEvents } = useEvents(user);
-
-  if (!user?.isLoggedIn || loadingEvents) {
-    Router.push('/login')
-  }
   return (
     <>
       <Cabecalho pagina="Ínicio" />
@@ -17,6 +11,7 @@ export default function Inicio() {
         <h1 className="h1">Olá, tudo bem?</h1>
         <h2 className="h3">Este é o sistema SAEQ</h2>
         <p>É um prazer ter você aqui!</p>
+        <p>{JSON.stringify(user, null, 2)}</p>
       </div>
     </>
   )

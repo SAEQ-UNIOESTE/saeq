@@ -11,8 +11,8 @@ export type NextIronHandler = (
 
 const withSession = (handler: NextIronHandler) =>
   withIronSession(handler, {
-    password: process.env.SECRET_COOKIE_PASSWORD,
-    cookieName: "next-iron-session/examples/next.js",
+    password: "dklksdjflfdksjklfsjgfgldsklsdgnvnbowjgrno4q34rnwegnkrknksdngnsnrkfgkslngkfdsgknsklfgnsenskrfdksrngndsgnd",
+    cookieName: "SAEQ-UNIOESTE",
     cookieOptions: {
       // the next line allows to use the session in non-https environments like
       // Next.js dev mode (http://localhost:3000)
