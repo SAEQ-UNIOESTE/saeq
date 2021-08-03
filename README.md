@@ -49,5 +49,5 @@ Isso irá criar um servidor postgresql com o usuário `postgres` e senha `passwo
 Em seguida adicione um arquivo `.env` na raiz do projeto com o conteúdo:
 
 ```bash
-DATABASE_URL="postgresql://postgresql:password@localhost:5432/mydb?schema=public"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres?schema=public"
 ```
