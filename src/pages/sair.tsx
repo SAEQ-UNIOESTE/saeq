@@ -1,4 +1,3 @@
-import Cabecalho from "../components/cabecalho";
 import withSession from "../../lib/session";
 import PropTypes from "prop-types";
 import fetchJson from "../../lib/fetchJson";
@@ -22,7 +21,10 @@ const Sair = ({ user }) => {
   sair()
   return (
     <>
-      <><h1>Você pode sair agora!</h1></>
+      <div className="p-5 text-center">
+        <h1 className="h3">Pronto, deslogado!</h1>
+        <p>Você pode fechar a página agora</p>
+      </div>
     </>
   );
 };
@@ -31,7 +33,7 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
   const user = req.session.get("user")
 
   if (user === undefined) {
-    res.setHeader("location", "/login")
+    res.setHeader("location", "/sair")
     res.statusCode = 302
     res.end()
     return { props: {} }
