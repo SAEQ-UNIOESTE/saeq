@@ -46,7 +46,7 @@ function FormularioDeCadastro() {
             body: JSON.stringify({
               novo_usuario: {
                 cpf: target.cpf.value,
-                nivel: "aluno",
+                nivel: "coordenador",
                 usuario: target.usuario.value,
                 email: target.email.value,
                 telefone: target.telefone.value,

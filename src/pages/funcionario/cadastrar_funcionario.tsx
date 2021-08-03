@@ -50,7 +50,7 @@ function FormularioDeCadastro() {
                 usuario: target.usuario.value,
                 email: target.email.value,
                 telefone: target.telefone.value,
-                curso: target.curso.value,
+                curso: null,
                 nome: target.nome.value,
                 sobrenome: target.sobrenome.value,
                 utilizar_nome_social: nome_social,

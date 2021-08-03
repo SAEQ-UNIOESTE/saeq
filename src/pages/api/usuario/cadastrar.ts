@@ -23,6 +23,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     nivel: req.body.novo_usuario.nivel,
     cpf: req.body.novo_usuario.cpf,
   }
+  console.log(novo_usuario)
   const cadastro_do_usuario = await cadastra_usuario(novo_usuario)
   console.log(cadastro_do_usuario)
   if (cadastro_do_usuario != 0) {
