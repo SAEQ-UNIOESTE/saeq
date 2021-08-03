@@ -23,9 +23,7 @@ function FormularioDeLogin() {
   const { mutateUser } = useUser({
     redirectTo: "/",
     redirectIfFound: true,
-  });
-
-  const [errorMsg, setErrorMsg] = useState("");
+  })
 
   async function handleSubmit(event:any) {
     event.preventDefault();
