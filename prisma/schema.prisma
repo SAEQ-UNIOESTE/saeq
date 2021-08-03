@@ -17,6 +17,7 @@ model usuarios {
   senha                String   @db.VarChar(4096)
   email_principal      String   @unique @db.VarChar(4096)
   telefone_principal   String   @db.VarChar(2048)
+  curso                String   @db.VarChar(2048)
   nome                 String   @db.VarChar(2048)
   sobrenome            String   @db.VarChar(2048)
   utilizar_nome_social Boolean

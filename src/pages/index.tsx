@@ -64,23 +64,3 @@ Inicio.propTypes = {
     })
   })
 }
-
-
-
-
-/*
-
-export default function Inicio() {
-  return (
-    <>
-      <Cabecalho pagina="Ínicio" nivel={user.dados.nivel} />
-      <div className="p-5 text-center">
-        <h1 className="h1">Olá, {nome_exibicao}, tudo bem?</h1>
-        <h2 className="h3">Este é o sistema SAEQ</h2>
-        <p>É um prazer ter você aqui!</p>
-      </div>
-    </>
-  )
-}
-
-*/
