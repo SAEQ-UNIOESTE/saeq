@@ -1,9 +1,16 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import Link from "next/link";
 import Cabecalho from "../components/cabecalho";
-import { withIronSession } from "next-iron-session";
+import useUser from "../../lib/useUser";
+import useEvents from "../../lib/useEvents";
+import Router from 'next/router';
 
 export default function Login() {
+  const { user } = useUser({ redirectTo: "/login" });
+  const { events, loadingEvents } = useEvents(user);
+
+  if (!user?.isLoggedIn || loadingEvents) {
+    Router.push('/login')
+  }
   return (
     <>
       <Cabecalho pagina="Ínicio" />
