@@ -15,6 +15,7 @@ export default withSession(async (req, res) => {
         usuario: usuario.usuario,
       },
     })
+    console.log(dados)
     if(dados === null) {
       res.json({erro: true, mensagem: "Usuário não encontrado!"})
       res.end()
@@ -25,6 +26,7 @@ export default withSession(async (req, res) => {
       res.end()
       return
     }
+    console.log(dados)
     const user = { isLoggedIn: true, dados };
     req.session.set("user", user);
     await req.session.save();

@@ -23,6 +23,7 @@ function FormularioDeCadastro() {
           usuario: { value: string },
           email: { value: string },
           telefone: { value: string },
+          curso: { value: string },
           nome: { value: string },
           sobrenome: { value: string },
           utilizar_nome_social: { value: string },
@@ -40,6 +41,7 @@ function FormularioDeCadastro() {
                 usuario: target.usuario.value,
                 email: target.email.value,
                 telefone: target.telefone.value,
+                curso: target.curso.value,
                 nome: target.nome.value,
                 sobrenome: target.sobrenome.value,
                 utilizar_nome_social: target.utilizar_nome_social.value,
@@ -94,9 +96,13 @@ function FormularioDeCadastro() {
             <label htmlFor="email" className="form-label">E-mail</label>
             <input type="text" id="email" name="email" className="form-control" placeholder="lucas.santos@ficticio.com"></input>
           </div>
-          <div className="mb-5">
+          <div className="mb-3">
             <label htmlFor="telefone" className="form-label">Telefone/Celular</label>
             <input type="text" id="telefone" name="telefone" className="form-control" placeholder="(45) 9 9988-0000"></input>
+          </div>
+          <div className="mb-5">
+            <label htmlFor="curso" className="form-label">Curso (use letras minúsculas)</label>
+            <input type="text" id="curso" name="curso" className="form-control" placeholder="pedagogia-noturno"></input>
           </div>
 
           <div className="mb-5">

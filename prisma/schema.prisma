@@ -13,11 +13,11 @@ model usuarios {
   logavel              Boolean
   nivel                String   @db.VarChar(32)
   data_de_cadastro     DateTime @db.Date
-  usuario              String   @db.VarChar(512)
+  usuario              String   @unique @db.VarChar(512)
   senha                String   @db.VarChar(1024)
   email_principal      String   @unique @db.VarChar(512)
   telefone_principal   String   @db.VarChar(24)
-  curso                String   @unique @db.VarChar(64)
+  curso                String?  @db.VarChar(64)
   nome                 String   @db.VarChar(256)
   sobrenome            String   @db.VarChar(256)
   utilizar_nome_social Boolean

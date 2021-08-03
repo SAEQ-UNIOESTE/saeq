@@ -31,6 +31,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     cpf: req.body.novo_usuario.cpf,
   }
   const cadastro_do_usuario = await cadastra_usuario(novo_usuario)
+  console.log(cadastro_do_usuario)
   if (cadastro_do_usuario != 0) {
     res.status(500)
     res.json({erro: true, mensagem: "Não foi possível inserir o usuário na base de dados"})
